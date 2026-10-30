@@ -1,0 +1,11 @@
+Riftwake — Windows x64 player
+=============================
+
+Run:  double-click Riftwake.exe
+
+Requirements: Windows 10/11, 64-bit. No .NET install needed (self-contained).
+
+Controls: WASD move, mouse aim, LMB attack, Q secondary (Lv3+),
+          Enter continue, F5 save, Esc menu, R after falling.
+
+Save file: %LocalAppData%\Riftwake\riftwake_save.json

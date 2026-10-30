@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 57dd6180a78b4e2c80cb6b25b7acfd6a
+  - enabled: 1
+    path: Assets/Scenes/ClassSelect.unity
+    guid: 0643c22a2ad2450297463d19d1352b39
+  - enabled: 1
+    path: Assets/Scenes/Mission.unity
+    guid: 660662f92279430fb8cb30b5a5620085
+  - enabled: 1
+    path: Assets/Scenes/Ending.unity
+    guid: a9770908df5b4684917f39da5e796006
+  - enabled: 1
+    path: Assets/Scenes/BrackenHollow.unity
+    guid: 6aa17c43ef514f3e8b6eb5329f7a31d5
+  m_configObjects: {}
