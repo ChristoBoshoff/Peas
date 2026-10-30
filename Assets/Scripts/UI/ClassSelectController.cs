@@ -1,11 +1,7 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Riftwake
 {
-    /// <summary>
-    /// First-run gate: choose Steelhand / Wildbinder / Spellwright, then enter Bracken Hollow.
-    /// </summary>
     public sealed class ClassSelectController : MonoBehaviour
     {
         HeroPath _highlighted = HeroPath.Steelhand;
@@ -14,6 +10,7 @@ namespace Riftwake
         void Awake()
         {
             GameSession.Ensure();
+            Progression.Ensure();
         }
 
         void OnGUI()
@@ -49,7 +46,7 @@ namespace Riftwake
 
             GUI.Label(new Rect(0, h * 0.08f, w, 54), "RIFTWAKE", title);
             GUI.Label(new Rect(w * 0.2f, h * 0.16f, w * 0.6f, 48),
-                "A rift tears open. You fall into the Verge. Before the Hollow takes you, choose how you will fight.",
+                "A rift tears open. You fall into the Verge. Choose how you will fight.",
                 subtitle);
 
             DrawPathCard(HeroPath.Steelhand, new Rect(w * 0.08f, h * 0.32f, w * 0.26f, h * 0.38f), body);
@@ -59,10 +56,9 @@ namespace Riftwake
             GUI.Label(new Rect(w * 0.2f, h * 0.74f, w * 0.6f, 40), _status, subtitle);
 
             var enterStyle = new GUIStyle(GUI.skin.button) { fontSize = 18, fontStyle = FontStyle.Bold };
-            if (GUI.Button(new Rect(w * 0.35f, h * 0.82f, w * 0.3f, 48), "Enter Bracken Hollow", enterStyle))
+            if (GUI.Button(new Rect(w * 0.35f, h * 0.82f, w * 0.3f, 48), "Begin Campaign", enterStyle))
                 BeginAdventure();
 
-            // Keyboard shortcuts matching classic first-run pick pace.
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
                 Highlight(HeroPath.Steelhand);
             if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
@@ -112,14 +108,12 @@ namespace Riftwake
         void Highlight(HeroPath path)
         {
             _highlighted = path;
-            _status = $"Path set: {GameSession.PathDisplayName(path)}. Press Enter to continue.";
+            _status = $"Path set: {GameSession.PathDisplayName(path)}. Press Enter to begin.";
         }
 
         void BeginAdventure()
         {
-            var session = GameSession.Ensure();
-            session.ChoosePath(_highlighted);
-            SceneManager.LoadScene(GameSession.BrackenHollowScene);
+            GameSession.Ensure().ChoosePath(_highlighted);
         }
     }
 }

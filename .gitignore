@@ -3,9 +3,17 @@
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
-[Bb]uilds/
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
+
+# Keep distributable player builds tracked
+!Builds/
+!Builds/**
+
+# Player toolchain intermediates
+Player/**/bin/
+Player/**/obj/
+Player/**/*.user
 MemoryCaptures/
 Recordings/
 

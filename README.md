@@ -1,71 +1,91 @@
 # Riftwake
 
-Top-down action RPG prototype in Unity — **version 2** first playthrough slice for the Peas project.
+Top-down action RPG for the **Peas** project — **version 2** full first campaign through **the Verge**.
 
-You wake as a **Riftborn** in **Bracken Hollow**, choose a path, learn the controls from **Elder Bram**, and survive **Ashmites**.
+Fresh IP only (Riftwake). Play the Windows build below, or open the Unity project in the Editor.
 
-## Requirements
+## Play now (Windows)
 
-- **Unity 2022.3 LTS** (project recorded as `2022.3.50f1`)
-- Built-in Render Pipeline (no URP/HDRP package required)
-- Windows / macOS / Linux Editor
+Distributable player (self-contained, no install):
 
-## Open & play
+```
+Builds/Windows64/Riftwake.exe
+```
 
-1. Clone this repo.
-2. Open the folder in Unity Hub → **Add** → select the repo root (the folder that contains `Assets/` and `ProjectSettings/`).
-3. Let Unity import scripts on first open.
-4. Open **`Assets/Scenes/ClassSelect.unity`**.
-5. Press Play.
+1. Download / clone this repo (or grab the exe from the PR artifacts path above).
+2. Double-click **`Riftwake.exe`** (Windows 10/11 x64).
+3. First launch may extract native libs beside the exe — keep the folder writable.
 
-`ClassSelect` is also scene index 0 in Build Settings. You can play **`Assets/Scenes/BrackenHollow.unity`** directly; it defaults to the Steelhand path if none was chosen.
+Saves go to `%LocalAppData%\Riftwake\riftwake_save.json`.
 
-## First playthrough flow
-
-1. **Choose a path** — Steelhand, Wildbinder, or Spellwright (keys `1` / `2` / `3`, then Enter).
-2. Enter **Bracken Hollow** — short arrival into the Verge.
-3. Follow **Elder Bram** prompts — move, aim, use your primary.
-4. Clear **Ashmites** that chase and melee when close.
-
-## Controls
+### Controls
 
 | Input | Action |
 | --- | --- |
-| WASD / Arrow keys | Move |
-| Mouse | Aim / face |
-| Left mouse button | Primary (path-gated) |
-| 1 / 2 / 3 | Highlight path on class select |
-| Enter / Space | Confirm path and enter Bracken Hollow |
-| R | Rise again after falling |
+| WASD / Arrows | Move |
+| Mouse | Aim |
+| Left mouse | Primary attack / cast |
+| Q | Secondary (unlocks at level 3) |
+| E | Buy Field Charm (hub) |
+| Enter / Space | Confirm / continue / depart hub |
+| 1 / 2 / 3 | Path select |
+| F5 | Save |
+| R | Rise after falling |
+| Esc | Main menu (progress saved) |
 
-### Path primaries
+### Campaign flow
 
-| Path | Primary | Notes |
+1. **Main menu** — New Campaign / Continue  
+2. **Path select** — Steelhand · Wildbinder · Spellwright  
+3. **Missions** — Bracken Hollow → Mireroad → Dunwick Crossing (hub) → Cinder Mines → Fellwood → Vergewatch Keep → Rift Heart (finale)  
+4. **Ending** — campaign complete; return to menu or start new  
+
+Progression: XP, levels, gold, Vitality/damage bonuses, secondary ability at Lv 3. Hub shop: Field Charm.
+
+### Path primaries / secondaries
+
+| Path | LMB | Q (Lv 3+) |
 | --- | --- | --- |
-| **Steelhand** | Cleaving Strike | Close melee arc |
-| **Wildbinder** | Thorn Dart | Ranged nature dart |
-| **Spellwright** | Ember Bolt | Ranged bolt; spends Focus |
+| Steelhand | Cleaving Strike | Iron Guard |
+| Wildbinder | Thorn Dart | Vine Snare |
+| Spellwright | Ember Bolt (Focus) | Flashflare (Focus) |
+
+## Unity Editor (develop / alternate play)
+
+- **Unity 2022.3 LTS** (project version `2022.3.50f1`)
+- Built-in Render Pipeline
+- Open the **repo root** in Unity Hub
+- Play **`Assets/Scenes/MainMenu.unity`** (Build Settings scene 0)
+
+Scenes: `MainMenu` → `ClassSelect` → `Mission` → `Ending` (plus legacy `BrackenHollow` route).
+
+Unity mirrors the same campaign systems (menu, paths, missions, save, progression, ending). Runtime content is bootstrapped from primitives.
+
+### Rebuild the Windows player
+
+Unity Editor licensing is not available in this CI environment, so the checked-in Windows build is produced from the Raylib companion player (same campaign):
+
+```bash
+# Requires .NET 8 SDK
+dotnet publish Player/Riftwake.Player/Riftwake.Player.csproj \
+  -c Release -r win-x64 --self-contained true \
+  -p:PublishSingleFile=true \
+  -p:IncludeNativeLibrariesForSelfExtract=true \
+  -o Builds/Windows64
+```
+
+Output: `Builds/Windows64/Riftwake.exe`
 
 ## Project layout
 
 ```
-Assets/
-  Scenes/           ClassSelect, BrackenHollow
-  Scripts/
-    Game/           Session + hero paths
-    Player/         Move + combat
-    Combat/         Vitality, Focus, projectiles, melee
-    Enemy/          Ashmite AI
-    Camera/         Isometric follow
-    UI/             Class select + HUD
-    NPCs/           Elder Bram
-    World/          Tutorial + scene bootstraps
+Assets/                 Unity project (Editor)
+Player/Riftwake.Player  Win64 player source (Raylib-cs)
+Builds/Windows64/       Distributable Riftwake.exe
 ProjectSettings/
 Packages/
 ```
 
-Scenes bootstrap most of the playable content at runtime from primitives so the first slice stays easy to open and extend.
-
 ## Status
 
-Playable first slice: path select → Bracken Hollow tutorial combat loop. Placeholder primitives only — art pass later.
+Full first campaign loop is playable via **`Builds/Windows64/Riftwake.exe`**. Placeholder / primitive art. Prefer working campaign over polish.
